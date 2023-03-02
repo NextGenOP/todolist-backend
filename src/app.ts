@@ -20,22 +20,11 @@ class App {
     dotenv();
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  protected corsOptionsDelegate(req: any, callback: any) {
-    const allowList: any = process.env.CORS_DOMAIN_ALLOW || [null];
-    let corsOptions: { origin: boolean };
-
-    if (allowList.indexOf(req.hostname) !== -1) {
-      corsOptions = { origin: true };
-    } else {
-      corsOptions = { origin: false };
-    }
-
-    callback(null, corsOptions);
-  }
-
   protected plugins(): void {
-    this.APP.use(cors(this.corsOptionsDelegate));
+    this.APP.use(cors({
+      origin: process.env.CORS_DOMAIN_ALLOW,
+      optionsSuccessStatus: 200
+    }));
     this.APP.use(helmet());
     this.APP.use(bodyParser.json());
     this.APP.use(compression());

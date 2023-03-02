@@ -4,3 +4,4 @@ build/
 coverage/
 .idea/
 .idea
+.gitignore

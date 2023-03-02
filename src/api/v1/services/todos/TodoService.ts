@@ -18,6 +18,8 @@ class TodoService extends BaseService {
         limit = 100;
       }
 
+      console.log("order_by",order_by.toString().toUpperCase())
+
       const getAlltodos = db.todo.findAndCountAll({
         order: [['deadline', order_by.toString().toUpperCase()]],
         where: {

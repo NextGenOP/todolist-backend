@@ -3,15 +3,12 @@ FROM node:16.19-alpine3.16
 RUN mkdir app
 WORKDIR /app
 
-ARG NODE_ENV
-ARG DB_HOST_DATABASE_PRODUCTION
-ARG DB_PORT
-ARG DB_USER_PRODUCTION
-ARG DB_PASSWORD_PRODUCTION
-ARG DB_NAME_PRODUCTION
-ARG PORT
-ARG JWT_SECRET_KEY
-ARG CORS_DOMAIN_ALLOW
+COPY . .
+RUN yarn
+RUN yarn run tsc
+CMD yarn run sequelize-cli db:migrate
+CMD yarn run start
+EXPOSE 8002/tcp
 
 ENV NODE_ENV=production
 ENV DB_HOST_DATABASE_PRODUCTION=postgresql-backend
@@ -21,12 +18,5 @@ ENV DB_PASSWORD_PRODUCTION=root
 ENV DB_NAME_PRODUCTION=todo-list
 ENV PORT=8002
 ENV JWT_SECRET_KEY=skafjklasfklsasdajf
-ENV CORS_DOMAIN_ALLOW=["http://localhost:3000"]
-
-COPY . .
-RUN yarn
-RUN yarn run tsc
-CMD yarn run sequelize-cli db:migrate
-CMD yarn run start
-EXPOSE 8002/tcp
-
+ENV DB_USER_PRODUCTION=postgres
+ENV CORS_DOMAIN_ALLOW=https://gh-pages.todolist-frontend.pages.dev
