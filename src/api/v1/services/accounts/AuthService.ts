@@ -104,6 +104,7 @@ class AuthService extends BaseService {
         errors: {},
         data: {
           token,
+          refreshToken,
         },
       });
     }
