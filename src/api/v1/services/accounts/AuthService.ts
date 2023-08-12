@@ -54,13 +54,15 @@ class AuthService extends BaseService {
     }
 
     const token = Authentication.generateToken(user.id);
-
+    const refreshtoken = Authentication.generaterefreshToken(user.id);
+    
     return this.res.status(201).json({
       status: true,
       message: 'Account created successfully',
       errors: {},
       data: {
         token,
+        refreshtoken,
       },
     });
   }
@@ -97,7 +99,8 @@ class AuthService extends BaseService {
 
     if (compare) {
       const token = Authentication.generateToken(user.id);
-
+      const refreshtoken = Authentication.generaterefreshToken(user.id);
+      
       return this.res.status(200).json({
         status: true,
         message: 'Login successfully',
