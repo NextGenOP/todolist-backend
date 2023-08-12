@@ -21,6 +21,15 @@ class Authentication {
     });
 
     return token;
+  }
+  public static generaterefreshToken = (id: number): string => {
+    const secretKey: string | any = process.env.JWT_SECRET_KEY;
+
+    const refreshtoken: string = jwt.sign({ id }, secretKey, {
+      expiresIn: '7d', // '604800',
+    });
+
+    return refreshtoken;
   };
 }
 
