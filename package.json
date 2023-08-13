@@ -17,6 +17,8 @@
     "dev": "nodemon ./build/src/index.js",
     "dev:ts": "nodemon -x ts-node ./src/index.ts",
     "start": "node ./build/src/index.js",
+    "build": "rm -rf build/ && tsc",
+    "build:watch": "npm run build && tsc -w",
     "test": "jest"
   },
   "devDependencies": {
