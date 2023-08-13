@@ -29,7 +29,7 @@ module.exports = {
     dialect: 'postgres',
     dialectOptions: {
     ssl: true,
-    sslmode: 'require',
+    sslmode: 'verify-full',
   },
   },
 };
