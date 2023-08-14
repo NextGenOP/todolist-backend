@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const { DB_HOST_DATABASE, DB_NAME, DB_USER, DB_PASSWORD,DB_HOST_DATABASE_PRODUCTION,DB_USER_PRODUCTION,DB_PASSWORD_PRODUCTION,DB_NAME_PRODUCTION } = process.env;
+const { DB_HOST_DATABASE, DB_NAME, DB_USER, DB_PASSWORD,DB_HOST_DATABASE_PRODUCTION,DB_USER_PRODUCTION,DB_PASSWORD_PRODUCTION,DB_NAME_PRODUCTION,DB_SSL_IS,DB_SSL_PRODUCTION_IS } = process.env;
 
 module.exports = {
   development: {
@@ -10,8 +10,10 @@ module.exports = {
     host: DB_HOST_DATABASE,
     dialect: 'postgres',
     dialectOptions: {
-    ssl: true,
-    sslmode: 'require',
+      ssl: {
+        require: DB_SSL_IS,
+        requestCert: true,
+      },
   },
   },
   test: {
@@ -28,8 +30,10 @@ module.exports = {
     host: DB_HOST_DATABASE_PRODUCTION,
     dialect: 'postgres',
     dialectOptions: {
-    ssl: true,
-    sslmode: 'verify-full',
+      ssl: {
+        require: DB_SSL_PRODUCTION_IS,
+        requestCert: true,
+      },
   },
   },
 };
