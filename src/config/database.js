@@ -34,7 +34,7 @@ module.exports = {
       ssl: {
         require: DB_SSL_PRODUCTION_IS,
         rejectUnauthorized: false,
-      },
-  },
-  },
+      }
+  }
+  }
 };
