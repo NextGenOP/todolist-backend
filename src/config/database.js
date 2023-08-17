@@ -8,10 +8,10 @@ module.exports = {
     database: DB_NAME,
     host: DB_HOST_DATABASE,
     dialect: 'postgres',
-    native: true,
     dialectOptions: {
       ssl: {
         require: DB_SSL_IS,
+        native: true,
         rejectUnauthorized: false,
       },
   },
@@ -24,15 +24,17 @@ module.exports = {
     dialect: 'postgres',
   },
   production: {
-    url: 'postgres://DB_USER_PRODUCTION:DB_PASSWORD_PRODUCTION@DB_HOST_DATABASE_PRODUCTION:5432/DB_NAME_PRODUCTION?sslmode=require',
+    username: DB_USER_PRODUCTION,
+    password: DB_PASSWORD_PRODUCTION,
+    database: DB_NAME_PRODUCTION,
+    host: DB_HOST_DATABASE_PRODUCTION,
     dialect: 'postgres',
-    native: true,
     dialectOptions: {
       ssl: {
         require: DB_SSL_PRODUCTION_IS,
+        native: true,
         rejectUnauthorized: false,
       }
-    }
   }
-  
+  }
 };
