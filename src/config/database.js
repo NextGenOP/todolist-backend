@@ -11,7 +11,6 @@ module.exports = {
     dialectOptions: {
       ssl: {
         require: DB_SSL_IS,
-        requestCert: true,
         rejectUnauthorized: false,
       },
   },
@@ -32,7 +31,6 @@ module.exports = {
     dialectOptions: {
       ssl: {
         require: DB_SSL_PRODUCTION_IS,
-        requestCert: true,
         rejectUnauthorized: false,
       },
   },
