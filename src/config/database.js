@@ -8,6 +8,7 @@ module.exports = {
     database: DB_NAME,
     host: DB_HOST_DATABASE,
     dialect: 'postgres',
+    native: true,
     dialectOptions: {
       ssl: {
         require: DB_SSL_IS,
@@ -28,6 +29,7 @@ module.exports = {
     database: DB_NAME_PRODUCTION,
     host: DB_HOST_DATABASE_PRODUCTION,
     dialect: 'postgres',
+    native: true,
     dialectOptions: {
       ssl: {
         require: DB_SSL_PRODUCTION_IS,
