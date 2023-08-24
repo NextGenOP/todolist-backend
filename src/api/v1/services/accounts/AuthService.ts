@@ -140,7 +140,7 @@ class AuthService extends BaseService {
   }
   async refresh(): Promise<Response> {
     const { id } = this.credential;
-    const reqtoken: any = req.headers.authorization.split(' ')[1];
+    const reqtoken: any = this.req.headers.authorization.split(' ')[1];
     const user = await db.user.findOne({
        where: { id },
     });

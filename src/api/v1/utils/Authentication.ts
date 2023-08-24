@@ -14,13 +14,12 @@ class Authentication {
     return result;
   };
 
-  public static saveRefreshToken = async (
-    id,
-    encryptedRefreshtoken: string
+  public static updateRefreshToken = async (
+    id: any,
+    encryptedRefreshToken: string
   ): Promise<boolean> => {
     const updateRefreshToken = await db.user.update(
       {
-        ...body,
         refresh_token: encryptedRefreshToken,
       },
       {
@@ -44,11 +43,11 @@ class Authentication {
   public static generateRefreshToken = (id: number): string => {
     const secretKey: string | any = process.env.REFRESH_SECRET_KEY;
 
-    const refreshtoken: string = jwt.sign({ id }, secretKey, {
+    const refreshToken: string = jwt.sign({ id }, secretKey, {
       expiresIn: '7d', // '604800',
     });
 
-    return refreshtoken;
+    return refreshToken;
   };
 }
 
