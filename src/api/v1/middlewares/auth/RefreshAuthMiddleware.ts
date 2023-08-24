@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import Authentication from '../../utils/Authentication';
 const db: any = require('../../models');
 
 const auth = (req: Request, res: Response, next: NextFunction): any => {
@@ -23,7 +24,7 @@ const auth = (req: Request, res: Response, next: NextFunction): any => {
       data: {},
     });
     
-  const user = await db.user.findOne({
+  const user = db.user.findOne({
       where: { credential },
   });
   const compare = Authentication.passwordCompare(token, user.refresh_token);
