@@ -15,6 +15,13 @@ class AuthController {
 
     return data;
   };
+
+  refresh = async (req: Request, res: Response): Promise<Response> => {
+    const service: AuthService = new AuthService(req, res);
+    const data = await service.refresh();
+
+    return data;
+  };
 }
 
 export default new AuthController();

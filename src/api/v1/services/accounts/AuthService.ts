@@ -28,6 +28,7 @@ class AuthService extends BaseService {
       username,
       email,
       password: hashedPassword,
+      refresh_token: 'dummy',
       image: 'default.jpg',
     });
 
@@ -54,15 +55,24 @@ class AuthService extends BaseService {
     }
 
     const token = Authentication.generateToken(user.id);
-    const refreshtoken = Authentication.generaterefreshToken(user.id);
-    
+    const refreshToken = Authentication.generateRefreshToken(user.id);
+    const hashedRefreshToken: string = await Authentication.passwordHash(refreshtoken);
+    const updateRefreshToken = await Authentication.updateRefreshToken(hashedRefreshToken);
+
+    if (!updateRefreshToken) {
+      return this.res.status(400).json({
+        status: false,
+        message: 'Create account failed',
+        errors: {},
+        data: {},
+    });}
     return this.res.status(201).json({
       status: true,
       message: 'Account created successfully',
       errors: {},
       data: {
         token,
-        refreshtoken,
+        refreshToken,
       },
     });
   }
@@ -99,15 +109,24 @@ class AuthService extends BaseService {
 
     if (compare) {
       const token = Authentication.generateToken(user.id);
-      const refreshtoken = Authentication.generaterefreshToken(user.id);
-      
+      const refreshToken = Authentication.generateRefreshToken(user.id);
+      const hashedRefreshToken: string = await Authentication.passwordHash(refreshToken);
+      const updateRefreshToken = await Authentication.updateRefreshToken(hashedRefreshToken);
+
+      if (!updateRefreshToken) {
+        return this.res.status(400).json({
+          status: false,
+          message: 'Create account failed',
+          errors: {},
+          data: {},
+      });}
       return this.res.status(200).json({
         status: true,
         message: 'Login successfully',
         errors: {},
         data: {
           token,
-          refreshtoken,
+          refreshToken,
         },
       });
     }
@@ -117,6 +136,44 @@ class AuthService extends BaseService {
       message: 'Authentication failed',
       errors: {},
       data: {},
+    });
+  }
+  async refresh(): Promise<Response> {
+    const { id } = this.credential;
+    const reqtoken: any = req.headers.authorization.split(' ')[1];
+    const user = await db.user.findOne({
+       where: { id },
+    });
+    const compare = Authentication.passwordCompare(reqtoken, user.refresh_token);
+    if (!compare){
+      return this.res.status(400).json({
+        status: false,
+        message: 'Authentication failed',
+        errors: {},
+        data: {},
+      });
+    }
+    const token = Authentication.generateToken(id);
+    const refreshToken = Authentication.generateRefreshToken(id);
+    const hashedRefreshToken: string = await Authentication.passwordHash(refreshToken);
+    const updateRefreshToken = await Authentication.updateRefreshToken(hashedRefreshToken);
+
+    if (!updateRefreshToken) {
+      return this.res.status(400).json({
+        status: false,
+        message: 'Create account failed',
+        errors: {},
+        data: {},
+    });}
+    
+    return this.res.status(200).json({
+      status: true,
+      message: 'Login successfully',
+      errors: {},
+      data: {
+        token,
+        refreshToken,
+      },
     });
   }
 }

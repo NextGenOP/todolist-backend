@@ -24,6 +24,10 @@ module.exports = {
           allowNull: false,
           type: Sequelize.STRING,
         },
+        refresh_token:{
+          allowNull: false,
+          type: Sequelize.STRING,
+        },
         image: {
           allowNull: false,
           default: 'default.jpg',

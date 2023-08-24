@@ -4,6 +4,7 @@ import BaseRoutes from '../BaseRouter';
 import AccountValidator from '../../validations/auth/authValidator';
 import ValidationError from '../../middlewares/validationErrorMiddleware';
 import Auth from '../../middlewares/auth/AuthMiddleware';
+import RefreshAuth from '../../middlewares/auth/RefreshAuthMiddleware';
 
 class AuthRoutes extends BaseRoutes {
   public routes(): void {
@@ -19,6 +20,7 @@ class AuthRoutes extends BaseRoutes {
       ValidationError.handleValidationError,
       AuthController.login
     );
+    this.router.post('/refresh', RefreshAuth, AuthController.refresh);
     this.router.get('/profile', Auth, Profile.index);
     this.router.put(
       '/profile',
