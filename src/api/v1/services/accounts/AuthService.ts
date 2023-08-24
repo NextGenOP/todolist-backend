@@ -56,7 +56,7 @@ class AuthService extends BaseService {
 
     const token = Authentication.generateToken(user.id);
     const refreshToken = Authentication.generateRefreshToken(user.id);
-    const hashedRefreshToken: string = await Authentication.passwordHash(refreshtoken);
+    const hashedRefreshToken: string = await Authentication.passwordHash(refreshToken);
     const updateRefreshToken = await Authentication.updateRefreshToken(user.id, hashedRefreshToken);
 
     if (!updateRefreshToken) {
@@ -140,19 +140,6 @@ class AuthService extends BaseService {
   }
   async refresh(): Promise<Response> {
     const { id } = this.credential;
-    const reqtoken: any = this.req.headers.authorization.split(' ')[1];
-    const user = await db.user.findOne({
-       where: { id },
-    });
-    const compare = Authentication.passwordCompare(reqtoken, user.refresh_token);
-    if (!compare){
-      return this.res.status(400).json({
-        status: false,
-        message: 'Authentication failed',
-        errors: {},
-        data: {},
-      });
-    }
     const token = Authentication.generateToken(id);
     const refreshToken = Authentication.generateRefreshToken(id);
     const hashedRefreshToken: string = await Authentication.passwordHash(refreshToken);
