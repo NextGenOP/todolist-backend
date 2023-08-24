@@ -1,6 +1,6 @@
 import { compare, hash } from 'bcrypt';
 import jwt from 'jsonwebtoken';
-const db: any = require('../../models');
+const db: any = require('../models');
 
 class Authentication {
   public static passwordHash = (password: string): Promise<string> =>
