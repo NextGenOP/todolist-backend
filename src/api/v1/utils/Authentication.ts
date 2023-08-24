@@ -15,6 +15,7 @@ class Authentication {
   };
 
   public static saveRefreshToken = async (
+    id,
     encryptedRefreshtoken: string
   ): Promise<boolean> => {
     const updateRefreshToken = await db.user.update(
@@ -23,8 +24,8 @@ class Authentication {
         refresh_token: encryptedRefreshToken,
       },
       {
-        where: {
-          user.id,
+        where:{
+          id,
         },
       }
     );

@@ -57,7 +57,7 @@ class AuthService extends BaseService {
     const token = Authentication.generateToken(user.id);
     const refreshToken = Authentication.generateRefreshToken(user.id);
     const hashedRefreshToken: string = await Authentication.passwordHash(refreshtoken);
-    const updateRefreshToken = await Authentication.updateRefreshToken(hashedRefreshToken);
+    const updateRefreshToken = await Authentication.updateRefreshToken(user.id, hashedRefreshToken);
 
     if (!updateRefreshToken) {
       return this.res.status(400).json({
@@ -111,7 +111,7 @@ class AuthService extends BaseService {
       const token = Authentication.generateToken(user.id);
       const refreshToken = Authentication.generateRefreshToken(user.id);
       const hashedRefreshToken: string = await Authentication.passwordHash(refreshToken);
-      const updateRefreshToken = await Authentication.updateRefreshToken(hashedRefreshToken);
+      const updateRefreshToken = await Authentication.updateRefreshToken(user.id, hashedRefreshToken);
 
       if (!updateRefreshToken) {
         return this.res.status(400).json({
@@ -156,7 +156,7 @@ class AuthService extends BaseService {
     const token = Authentication.generateToken(id);
     const refreshToken = Authentication.generateRefreshToken(id);
     const hashedRefreshToken: string = await Authentication.passwordHash(refreshToken);
-    const updateRefreshToken = await Authentication.updateRefreshToken(hashedRefreshToken);
+    const updateRefreshToken = await Authentication.updateRefreshToken(id, hashedRefreshToken);
 
     if (!updateRefreshToken) {
       return this.res.status(400).json({
@@ -165,7 +165,7 @@ class AuthService extends BaseService {
         errors: {},
         data: {},
     });}
-    
+
     return this.res.status(200).json({
       status: true,
       message: 'Login successfully',
