@@ -1,6 +1,5 @@
 import { compare, hash } from 'bcrypt';
 import jwt from 'jsonwebtoken';
-const db: any = require('../models');
 
 class Authentication {
   public static passwordHash = (password: string): Promise<string> =>
@@ -14,22 +13,6 @@ class Authentication {
     return result;
   };
 
-  public static updateRefreshToken = async (
-    id: any,
-    encryptedRefreshToken: string
-  ): Promise<boolean> => {
-    const updateRefreshToken = await db.user.update(
-      {
-        refresh_token: encryptedRefreshToken,
-      },
-      {
-        where:{
-          id,
-        },
-      }
-    );
-    return updateRefreshToken;
-  }
 
   public static generateToken = (id: number): string => {
     const secretKey: string | any = process.env.JWT_SECRET_KEY;
